@@ -1,1 +1,1 @@
-Estou me aperfeiçoando mais nas linguagens FRONT-END, Utilizei HTML, CSS, JAVASCRIPT, foi complicado mas consegui deixar como queria, ainda não está totalmente pronto, falta alguns detalhes, porém pouca coisa, curtão meu código! haha
+Indrodução a Front-End, usando HTML CSS JAVASCRIPT, Site completoe rodando em servidor gratuito.

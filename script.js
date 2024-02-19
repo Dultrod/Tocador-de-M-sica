@@ -5,6 +5,7 @@ const cover = document.getElementById('cover');
 const play = document.getElementById('play');
 const next = document.getElementById('next');
 const previous = document.getElementById('previous');
+const likeButton = document.getElementById('like');
 const currentProgress = document.getElementById('current-progress');
 const progressContainer = document.getElementById('progress-container');
 const shuffleButton = document.getElementById('shuffle');
@@ -12,20 +13,25 @@ const repeatButton = document.getElementById('repeat');
 const songTime = document.getElementById('song-time');
 const totalTime = document.getElementById('total-time');
 
+
 const DEJAVU = {
     songName: 'DEJA VU',
     artist : 'Luan Santana',
-    file : 'Deja_vu'
+    file : 'Deja_vu',
+    liked: false,
+
 };
 const CARRINHODEAREIA = {
     songName: 'CARRINHO DE AREIA',
     artist : 'Gusttavo Lima',
-    file : 'carrinho_de_areia'
+    file : 'carrinho_de_areia',
+    liked: true,
 };
 const INFIEL = {
     songName: 'FOLGADO',
     artist : 'Marília Mendonça',
-    file : 'infiel_marilia'
+    file : 'infiel_marilia',
+    liked: false,
 };
 let isPlaying = false;
 let isShuffled = false;
@@ -57,11 +63,25 @@ function playPauseDecider(){
     }
 }
 
+function likeButtonRender(){
+   if (sortedPlaylist[index].liked === false) {
+    likeButton.querySelector('.bi').classList.remove('bi-heart');
+    likeButton.querySelector('.bi').classList.add('bi-heart-fill');
+    likeButton.classList.add('button-active');
+   }
+   else {
+    likeButton.querySelector('.bi').classList.add('bi-heart');
+    likeButton.querySelector('.bi').classList.remove('bi-heart-fill');
+    likeButton.classList.remove('button-active');
+   }
+}
+
 function initializeSong(){
     cover.src = `images/${sortedPlaylist[index].file}.jpg`;
     song.src = `songs/${sortedPlaylist[index].file}.mp3`;
     songName.innerText = sortedPlaylist[index].songName;
     bandName.innerText = sortedPlaylist[index].artist;
+    likeButtonRender();
 }
 
 function previousSong(){
@@ -86,9 +106,11 @@ function nextSong(){
     playSong();
 }
 
-function updateProgressBar(){
+function updateProgress(){
     const barWidth = (song.currentTime/song.duration)*100;
     currentProgress.style.setProperty('--progress', `${barWidth}%`);
+    songTime.innerText = toHHMMSS (song.currentTime);
+    
 }
 
 function jumpTo(event){
@@ -149,16 +171,24 @@ function toHHMMSS(originalNumber){
   let min = Math.floor((originalNumber - hours * 3600)/60);
   let secs = Math.floor(originalNumber - hours * 3600 - min * 60);
 
-  alert(`${hours.toString().padStart(2, '0')}: ${min.toString().padStart(2, '0')}: ${secs.toString().padStart(2, '0')}`);
-}
-
-function updateCurrentTime() {
-    songTime.innerText = song.currentTime;
+return `${hours.toString().padStart(2, '0')}: ${min.toString().padStart(2, '0')}: ${secs.toString().padStart(2, '0')}`;
 }
 
 function updateTotalTime() {
     toHHMMSS(song.duration);
-    totalTime.innerText = song.duration;
+    totalTime.innerText = toHHMMSS (song.duration);
+}
+
+function likeButtonClicked(){
+    if(sortedPlaylist[index].liked === false){
+        sortedPlaylist[index].liked = true;
+    } else {
+        sortedPlaylist[index].liked = false;
+    }
+    likeButtonRender();
+    localStorage.setItem('playlist', 
+    JSON.stringify(originalPlaylist)
+    );
 }
 
 initializeSong();
@@ -166,9 +196,10 @@ initializeSong();
 play.addEventListener('click', playPauseDecider);
 previous.addEventListener('click',previousSong);
 next.addEventListener('click',nextSong);
-song.addEventListener('timeupdate', updateProgressBar);
+song.addEventListener('timeupdate', updateProgress);
 song.addEventListener('ended', nextOrRepeat);
 song.addEventListener('loadedmetadata', updateTotalTime);
 progressContainer.addEventListener('click', jumpTo);
 shuffleButton.addEventListener('click', shuffleButtonClicked);
 repeatButton.addEventListener('click', repeatButtonClicked);
+likeButton.addEventListener('click', likeButtonClicked);

@@ -1,17 +1,19 @@
-body{
+body {
     background-image: linear-gradient(
-        rgb(59,88,93),
-        rgb(29,40,42) 
-        );
+        rgb(59, 88, 93),
+        rgb(29, 40, 42)
+    );
     height: 100vh; /* vh Manda o body ocupar 100% da página.*/
     color: white;
     font-family: sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0; /* Removendo margens padrão */
+    padding: 0; /* Removendo preenchimento padrão */
 }
 
-button{
+button {
     background-color: inherit;
     color: inherit;
     border: none;
@@ -25,14 +27,14 @@ button{
     margin: 3em 0 1em 0;
 }
 
-#button-container{
+#button-container {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
 }
 
-.button{
+.button {
     font-size: 1.5em;
     cursor: pointer;
 }
@@ -41,19 +43,24 @@ button{
     font-size: 3em;
 }
 
-.button-biggest{
+.button-biggest {
     font-size: 4em;
 }
 
-#cover{
-    width: 450px;
+#cover {
+    #cover {
+        width: 100%; /* Alterando a largura para ocupar 100% do contêiner pai */
+        max-width: 100%; /* Adicionando uma largura máxima para evitar que a imagem se estenda além da tela */
+        height: auto; /* Permitindo que a altura seja ajustada automaticamente para manter a proporção da imagem */
+    }
+    
 }
 
-#playlist-title{
+#playlist-title {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin: 1.5em 0em 3.5em 0em;    
+    margin: 1.5em 0em 3.5em 0em;
 }
 
 #song-name {
@@ -62,17 +69,17 @@ button{
 }
 
 .light-color {
-    color: rgb(139,153,156);
+    color: rgb(139, 153, 156);
 }
 
-#progress-bar{
-    background-color: rgb(139,153,156);
+#progress-bar {
+    background-color: rgb(139, 153, 156);
     height: 3px;
     width: 100%;
     border-radius: 15px;
 }
 
-#current-progress{
+#current-progress {
     --progress: 0%;
     background-color: white;
     height: inherit;
@@ -80,7 +87,7 @@ button{
     border-radius: inherit;
 }
 
-#progress-container{
+#progress-container {
     cursor: pointer;
 }
 
